@@ -11,8 +11,61 @@ Here is a good descriptipon of this picked from [here](https://paulbourke.net/da
 For any file, P3 usually mean that this is in text.
 Each line is following a new line character
 ```
-P3 3 2
-255
+P3 
+3 2 # The size
+255 # The max colour
 255 0 0     0 255 0     0 0 255
 255 255 0   255 255 255     0 0 0
 ```
+In our case the aim is to create a 256x256 pixel image, an example is created in `image.ppm`. In order to view this you can use [this](https://www.cs.rhodes.edu/welshc/COMP141_F16/ppmReader.html) and upload the image there.
+
+But a few things need to be done before this can blindly be done.
+
+## Setup
+### Install Cmake
+If you're like me and have run into this error too many times:
+`cmake: The term 'cmake' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.`
+It just means that you don't have CMake installed and you should install it using an MSI online or just use winget. For example
+
+```bash
+winget install kitware.cmake
+```
+
+### Set up CmakeLists.txt
+You need a `CmakeLists.txt`.
+
+`CMakeLists.txt` is a file used by CMake, a cross-platform build system generator. This file contains instructions and configurations that tell CMake how to build your project. Here’s what it typically includes and what it’s used for:
+- Project Configuration: You can specify the name of the project, the version, and any languages used (like C, C++, etc.).
+```cmake
+project(MyProject VERSION 1.0.0 LANGUAGES CXX)
+```
+- Defining Targets: You can define build targets like executables, libraries, etc. A target can be an executable or a library that you want to build.
+```cmake
+add_executable(MyExecutable main.cpp)
+add_library(MyLibrary STATIC library.cpp)
+```
+- Specifying Source Files: You specify which source files are part of the project.
+```cmake
+set(SOURCES main.cpp file1.cpp file2.cpp)
+```
+- Setting Build Options: You can set various build options like compiler flags, include directories, and linking libraries.
+```cmake
+target_compile_options(MyExecutable PRIVATE -Wall -Wextra)
+target_include_directories(MyExecutable PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(MyExecutable PRIVATE MyLibrary)
+```
+- Handling Dependencies: CMake can be used to manage project dependencies, downloading and integrating them into your build.
+```cmake
+find_package(OpenCV REQUIRED)
+target_link_libraries(MyExecutable PRIVATE ${OpenCV_LIBS})
+```
+- Custom Commands: You can define custom commands to be run during the build process, such as generating files or running tests.
+```cmake
+add_custom_command(
+    TARGET MyExecutable
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/MyExecutable ${CMAKE_SOURCE_DIR}/bin
+)
+```
+
