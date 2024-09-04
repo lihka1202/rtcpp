@@ -69,3 +69,13 @@ add_custom_command(
 )
 ```
 
+## Start coding
+Now we can start coding, can reference from `randomImage.cc`.
+
+Note that we need the following commands:
+
+### Command Guide
+`cmake -B build`: 
+`cmake --build build`:
+`build\Debug\inOneWeekend.exe > image.ppm`
+
