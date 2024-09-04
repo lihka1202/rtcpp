@@ -75,7 +75,9 @@ Now we can start coding, can reference from `randomImage.cc`.
 Note that we need the following commands:
 
 ### Command Guide
-`cmake -B build`: 
-`cmake --build build`:
-`build\Debug\inOneWeekend.exe > image.ppm`
+- `cmake -B build`: The -B option tells CMake where to create the build directory and store the generated build files. In this case, it specifies that the build directory should be used. If the build directory doesn’t exist, CMake will create it.
+
+- `cmake --build build`: This is used to run the build command
+- `build\Debug\inOneWeekend.exe > image.ppm`: This runs the program and stores the result in `image.ppm`
+
 
